@@ -94,6 +94,7 @@
                             <input name="nuts_width" class="form-control" id="nuts_width" type="text" disabled>
                         </div>
                     </div>
+                    <input style="display: none" id="params" name="params">
 
                     <legend>Подтовары</legend>
                     <button id="addSubitem">+ Добавить</button>
@@ -130,6 +131,10 @@
         itemsList = data.data;
     });
 
+    function removeSubitem(that) {
+        $(that).parent().remove();
+    }
+
     function addSubitem() {
         hiCounter++;
 
@@ -137,6 +142,7 @@
                             <div class="form-group field field-string"><label for="${hiCounter}_partSelect">Составной товар</label>
                         <select required id="${hiCounter}_partSelect" name="parts[]" class="form-control">
                         </select>
+                        <button onclick="removeSubitem(this);">Удалить</button>
                     </div>
         `);
 
@@ -176,6 +182,12 @@
         });
 
     });
+
+    setInterval(function () {
+        $('#params').val(JSON.stringify(getVariativeFields($('#formOne_type').val())));
+    }, 500)
+
+
 </script>
 
 
