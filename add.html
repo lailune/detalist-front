@@ -193,8 +193,13 @@
 
 
     $('#submit').click(function () {
+        $('#submit').addClass('disabled');
         let parts = [];
         for (let part of $('[name="parts[]"]')) {
+            if(parts.includes($(part).val())){
+                alert('Вы не можете выбирать одну и ту-же запчасть дважды');
+                return;
+            }
             parts.push($(part).val());
         }
         $.post('/item/create', {
@@ -205,7 +210,13 @@
             params: $('#params').val(),
             parts: parts
         }, function (data) {
-            conole.log(data);
+            $('#submit').removeClass('disabled');
+            if(data.error) {
+                alert('Ошибка добавления ' + data.message)
+            } else {
+                alert('Товар успешно создан');
+                document.location.reload();
+            }
         })
     })
 
