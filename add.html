@@ -97,7 +97,7 @@
                     <input style="display: none" id="params" name="params">
 
                     <legend>Подтовары</legend>
-                    <button id="addSubitem">+ Добавить</button>
+                    <button id="addSubitem" class="btn btn-secondary">+ Добавить</button>
                     <div id="subitemsList">
 
                     </div>
@@ -105,7 +105,7 @@
                 </fieldset>
             </div>
             <div>
-                <button type="button" class="btn btn-primary">Отменить</button>&nbsp;
+                <!-- <button type="button" class="btn btn-primary">Отменить</button>&nbsp; -->
                 <button id="submit" type="button" class="btn btn-primary">Отправить</button>
             </div>
         </form>
@@ -132,7 +132,7 @@
     });
 
     function removeSubitem(that) {
-        $(that).parent().remove();
+        $(that).parent().parent().parent().remove();
     }
 
     function addSubitem() {
@@ -140,9 +140,15 @@
 
         $('#subitemsList').append(`
                             <div class="form-group field field-string"><label for="${hiCounter}_partSelect">Составной товар</label>
+                            <div class="row">
+                            <div class="col-md-10">
                         <select required id="${hiCounter}_partSelect" name="parts[]" class="form-control">
                         </select>
-                        <button onclick="removeSubitem(this);">Удалить</button>
+                        </div>
+                        <div class="col-md-2">
+                        <button onclick="removeSubitem(this);" class="btn btn-danger">Удалить</button>
+                        </div>
+                        </div>
                     </div>
         `);
 
@@ -196,7 +202,7 @@
 
         let parts = [];
         for (let part of $('[name="parts[]"]')) {
-            if(parts.includes($(part).val())){
+            if(parts.includes($(part).val())) {
                 alert('Вы не можете выбирать одну и ту-же запчасть дважды');
                 return;
             }
