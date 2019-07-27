@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 
     <link rel="stylesheet" href="main.css">
     <title>Деталист - проверка товара</title>
@@ -29,6 +30,9 @@
                    type="text" value="">
         </div>
         <button id="checkItem" class="btn btn-primary">Проверить</button>
+
+        <hr>
+        <div id="itemTreeView"></div>
     </div>
 </div>
 
@@ -42,7 +46,46 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script>
+
+    function updateTreeView(data) {
+        $('#currentTreeView').remove();
+        $('#itemTreeView').append('<div id="currentTreeView"></div>');
+        $('#currentTreeView').jstree({
+            'core': {
+                'data': data
+            }
+        });
+    }
+
+    /**
+     * [
+     {"id": "ajson1", "parent": "#", "text": "Simple root node"},
+     {"id": "ajson2", "parent": "#", "text": "Root node 2"},
+     {"id": "ajson3", "parent": "ajson2", "text": "Child 1"},
+     {"id": "ajson4", "parent": "ajson2", "text": "Child 2"},
+     ]
+     * @param data
+     */
+
+    function formatTreeViewData(data) {
+
+        let treeViewArr = [];
+
+        function formatItem(item, parent = '#') {
+            treeViewArr.push({id: item.id, parent: parent, text: `${item.code} - ${item.type} : ${item.bench}`});
+            for (let part of item.parts) {
+                formatItem(part, item.id);
+            }
+        }
+
+        formatItem(data);
+
+        return treeViewArr;
+
+    }
+
 
     $('#checkItem').click(function () {
         $.get('/item/bycode/' + $('#itemCode').val(), function (data) {
@@ -52,6 +95,10 @@
             }
 
             data = data.data;
+
+            data = formatTreeViewData(data);
+
+            updateTreeView(data);
 
             console.log(data);
         })
