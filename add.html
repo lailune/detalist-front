@@ -195,7 +195,7 @@
     $('#submit').click(function () {
         let parts = [];
         for (let part of $('[name="parts[]"]')) {
-            part.push($(part).val());
+            parts.push($(part).val());
         }
         $.post('/item/create', {
             code: $('#formOne_code').val(),
