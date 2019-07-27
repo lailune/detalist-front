@@ -46,7 +46,8 @@
                             <option value="nuts">Гайка</option>
                             <option value="screw">Болт</option>
                             <option value="disc">Диск</option>
-                        </select></div>
+                        </select>
+                    </div>
 
                     <div class="form-group field field-string"><label for="formOne_bench">Партия</label>
                         <input name="bench" class="form-control" id="formOne_bench" label="Партия" placeholder=""
@@ -93,6 +94,13 @@
                             <input name="nuts_width" class="form-control" id="nuts_width" type="text" disabled>
                         </div>
                     </div>
+
+                    <legend>Подтовары</legend>
+                    <button id="addSubitem">+ Добавить</button>
+                    <div id="subitemsList">
+
+                    </div>
+
                 </fieldset>
             </div>
             <div>
@@ -115,11 +123,31 @@
         crossorigin="anonymous"></script>
 <script>
 
+    let hiCounter = 0;
     let itemsList = [];
 
     $.get('/items', function (data) {
-        console.log(data);
+        itemsList = data.data;
     });
+
+    function addSubitem() {
+        hiCounter++;
+
+        $('#subitemsList').append(`
+                            <div class="form-group field field-string"><label for="${hiCounter}_partSelect">Составной товар</label>
+                        <select required id="${hiCounter}_partSelect" name="parts[]" class="form-control">
+                        </select>
+                    </div>
+        `);
+
+        for (let item of itemsList) {
+            $('#' + hiCounter + '_partSelect').append($('<option>', {value: item.id})
+                .text(`${item.code} - ${item.type}`));
+        }
+
+    }
+
+    $('#addSubitem').click(addSubitem);
 
     function getVariativeFields(type) {
         let containerSelector = '#' + type + '_attribForm';
