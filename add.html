@@ -193,7 +193,7 @@
 
 
     $('#submit').click(function () {
-        $('#submit').addClass('disabled');
+
         let parts = [];
         for (let part of $('[name="parts[]"]')) {
             if(parts.includes($(part).val())){
@@ -202,6 +202,8 @@
             }
             parts.push($(part).val());
         }
+
+        $('#submit').addClass('disabled');
         $.post('/item/create', {
             code: $('#formOne_code').val(),
             addedBy: $('#formOne_addedBy').val(),
@@ -212,7 +214,7 @@
         }, function (data) {
             $('#submit').removeClass('disabled');
             if(data.error) {
-                alert('Ошибка добавления ' + data.message)
+                alert('Ошибка добавления ' + data.errorMessage)
             } else {
                 alert('Товар успешно создан');
                 document.location.reload();
