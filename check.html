@@ -50,9 +50,9 @@
 <script>
 
     function treeViewSelected(id) {
-       $.get('/item/'+id,function (data) {
-           console.log(data);
-       })
+        $.get('/item/' + id, function (data) {
+            console.log(data);
+        })
     }
 
     function updateTreeView(data) {
@@ -84,7 +84,14 @@
         let treeViewArr = [];
 
         function formatItem(item, parent = '#') {
-            treeViewArr.push({id: item.id, parent: parent, text: `${item.code} - ${item.type} : ${item.bench}`, state:{opened: true}});
+
+            treeViewArr.push({
+                id: item.id,
+                parent: parent,
+                text: `${item.code} - ${item.type} : ${item.bench}`,
+                state: {opened: true},
+                icon: item.broken ? 'icons/warning.png' : 'icons/ok.png'
+            });
             for (let part of item.parts) {
                 formatItem(part, item.id);
             }
