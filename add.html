@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<div id="root">
+    <nav class="sc-bdVaJa hzuJoB navbar navbar-expand navbar-dark bg-dark">
+        <div class="container"><a href="/" class="navbar-brand" style="font-size: 60px;">
+            <img alt="" src="/logo.svg"
+                 width="30" height="30"
+                 class="d-inline-block align-top">Деталист</a>
+        </div>
+    </nav>
+    <div class="sc-bwzfXH eFOsme container">
+        <h1 class="sc-htpNat fHlYCv">Производитель</h1>
+        <form class="rjsf" method="post" action="/item/create">
+            <div class="form-group field field-object">
+                <fieldset id="formOne">
+                    <legend id="formOne__title">Создание товара/запчасти</legend>
+                    <div class="form-group field field-string"><label for="formOne_addedBy">Кто добавил</label>
+                        <select name="addedBy" id="formOne_addedBy" class="form-control">
+                            <option value=""></option>
+                            <option value="0">ООО Рассвет</option>
+                            <option value="1">ООО Персектива</option>
+                            <option value="2">ООО Детали</option>
+                        </select></div>
+                    <div class="form-group field field-string"><label for="formOne_code">Код
+                        товара/запчасти</label>
+                        <input
+                                class="form-control" id="formOne_code" name="code" label="Код" placeholder=""
+                                type="text" value="">
+                    </div>
+                    <div class="form-group field field-string"><label for="formOne_type">Тип</label>
+                        <select required id="formOne_type" name="type" class="form-control">
+                            <option value=""></option>
+                            <option value="tyre">Шина</option>
+                            <option value="nuts">Гайка</option>
+                            <option value="screw">Болт</option>
+                            <option value="disc">Диск</option>
+                        </select></div>
+
+                    <div class="form-group field field-string"><label for="formOne_bench">Партия</label>
+                        <input name="bench" class="form-control" id="formOne_bench" label="Партия" placeholder=""
+                               type="text" value="">
+                    </div>
+                    <legend>Параметры товара</legend>
+                    <div id="tyre_attribForm" style="display: none">
+                        <div class="form-group field field-string">
+                            <label for="tyre_size">Диаметр шины</label>
+                            <input name="tyre_size" class="form-control" id="tyre_size" type="text" disabled>
+                        </div>
+                        <div class="form-group field field-string">
+                            <label for="tyre_width">Ширина шины</label>
+                            <input name="tyre_width" class="form-control" id="tyre_width" type="text" disabled>
+                        </div>
+                    </div>
+                    <div id="disc_attribForm" style="display: none">
+                        <div class="form-group field field-string">
+                            <label for="disc_size">Диаметр диска</label>
+                            <input name="disc_size" class="form-control" id="disc_size" type="text" disabled>
+                        </div>
+                        <div class="form-group field field-string">
+                            <label for="disc_width">Ширина диска</label>
+                            <input name="disc_width" class="form-control" id="disc_width" type="text" disabled>
+                        </div>
+                    </div>
+                    <div id="screw_attribForm" style="display: none">
+                        <div class="form-group field field-string">
+                            <label for="screw_size">Длина болта</label>
+                            <input name="screw_size" class="form-control" id="screw_size" type="text" disabled>
+                        </div>
+                        <div class="form-group field field-string">
+                            <label for="screw_width">Диаметр шляпки болта</label>
+                            <input name="screw_width" class="form-control" id="screw_width" type="text" disabled>
+                        </div>
+                    </div>
+                    <div id="nuts_attribForm" style="display: none">
+                        <div class="form-group field field-string">
+                            <label for="nuts_size">Диаметр гаек</label>
+                            <input name="nuts_size" class="form-control" id="nuts_size" type="text" disabled>
+                        </div>
+                        <div class="form-group field field-string">
+                            <label for="nuts_width">Толщина гайки</label>
+                            <input name="nuts_width" class="form-control" id="nuts_width" type="text" disabled>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary">Отменить</button>&nbsp;
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script>
+
+    let itemsList = [];
+
+    $.get('/items', function (data) {
+        console.log(data);
+    });
+
+    function getVariativeFields(type) {
+        let containerSelector = '#' + type + '_attribForm';
+        let varObj = {};
+        $(containerSelector).find('input').each(function (i, el) {
+            varObj[$(el).attr('name')] = $(el).val();
+        });
+
+        return varObj;
+    }
+
+    $('#formOne_type').change(function () {
+        let type = $(this).val();
+
+        let containerSelector = '#' + type + '_attribForm';
+
+        $('.attribFormShow').hide();
+        $('.attribFormShow').find('input').each(function (i, el) {
+            $(el).attr('disabled', true);
+        });
+        $('.attribFormShow').removeClass('attribFormShow');
+
+        $(containerSelector).show().addClass('attribFormShow');
+        $('.attribFormShow').find('input').each(function (i, el) {
+            $(el).attr('disabled', false);
+        });
+
+    });
+</script>
+
+
+</body>
+</html>
