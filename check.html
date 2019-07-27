@@ -49,8 +49,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script>
 
-    function treeViewSelected(data) {
-        console.log(data);
+    function treeViewSelected(id) {
+       $.get('/item/'+id,function (data) {
+           console.log(data);
+       })
     }
 
     function updateTreeView(data) {
@@ -63,7 +65,7 @@
             }
         });
         $('#currentTreeView').on("changed.jstree", function (e, data) {
-            treeViewSelected(data.selected);
+            treeViewSelected(data.selected[0]);
         });
     }
 
