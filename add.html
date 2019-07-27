@@ -22,7 +22,7 @@
     </nav>
     <div class="sc-bwzfXH eFOsme container">
         <h1 class="sc-htpNat fHlYCv">Производитель</h1>
-        <form class="rjsf" method="post" action="/item/create">
+        <form class="rjsf" method="post" action="/item/create" id="addForm">
             <div class="form-group field field-object">
                 <fieldset id="formOne">
                     <legend id="formOne__title">Создание товара/запчасти</legend>
@@ -106,7 +106,7 @@
             </div>
             <div>
                 <button type="button" class="btn btn-primary">Отменить</button>&nbsp;
-                <button type="submit" class="btn btn-primary">Отправить</button>
+                <button id="submit" type="button" class="btn btn-primary">Отправить</button>
             </div>
         </form>
     </div>
@@ -185,8 +185,29 @@
 
     setInterval(function () {
         $('#params').val(JSON.stringify(getVariativeFields($('#formOne_type').val())));
-    }, 500)
+    }, 500);
 
+    $('#addForm').submit(function (e) {
+        e.preventDefault();
+    });
+
+
+    $('#submit').click(function () {
+        let parts = [];
+        for (let part of $('[name="parts[]"]')) {
+            part.push($(part).val());
+        }
+        $.post('/item/create', {
+            code: $('#formOne_code').val(),
+            addedBy: $('#formOne_addedBy').val(),
+            type: $('#formOne_type').val(),
+            bench: $('#formOne_bench').val(),
+            params: $('#params').val(),
+            parts: parts
+        }, function (data) {
+            conole.log(data);
+        })
+    })
 
 </script>
 
