@@ -82,7 +82,7 @@
         let treeViewArr = [];
 
         function formatItem(item, parent = '#') {
-            treeViewArr.push({id: item.id, parent: parent, text: `${item.code} - ${item.type} : ${item.bench}`, state:'opened'});
+            treeViewArr.push({id: item.id, parent: parent, text: `${item.code} - ${item.type} : ${item.bench}`, state:{opened: true}});
             for (let part of item.parts) {
                 formatItem(part, item.id);
             }
