@@ -44,6 +44,9 @@
                 <span id="bench"></span><br>
                 <b>Тип</b><br>
                 <span id="type"></span><br>
+                <b>Забраеована?</b><br>
+                <span id="broken"></span><br>
+                <br>
                 <button id="markBroken" class="btn btn-danger">Отметить брак</button>
             </div>
         </div>
@@ -87,6 +90,14 @@
             $('#addedBy').text(data.addedBy);
             $('#bench').text(data.bench);
             $('#type').text(data.type);
+
+            $('#broken').html(data.broken ? '<span style="color: red;">ДА</span>' : 'Нет');
+
+            if(data.broken) {
+                $('#markBroken').hide();
+            } else {
+                $('#markBroken').show();
+            }
         })
     }
 
