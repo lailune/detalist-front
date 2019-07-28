@@ -81,6 +81,8 @@
                 <button id="markBroken" class="btn btn-danger">Отметить брак</button>
             </div>
         </div>
+        <h2>График вероятности брака</h2>
+        <img src="res.png" id="analyticsGraph">
         <div class="notDisplay" id="currentItemInfo">
 
 
@@ -243,6 +245,11 @@
             ${data.additionalInfo}<br>
             `);
 
+            $('#analyticsGraph').attr('src', 'loading.gif');
+
+            $.get('/analytics/'+data.id, function (data) {
+                $('#analyticsGraph').attr('src', data);
+            });
 
             data = formatTreeViewData(data);
 
