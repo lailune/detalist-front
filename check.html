@@ -12,29 +12,56 @@
 
     <link rel="stylesheet" href="main.css">
     <title>Деталист - проверка товара</title>
+    <style>
+        @media print {
+            /* Стиль для печати */
+            .navbar, .notPrint {
+                display: none;
+            }
+        }
+
+        @media screen {
+
+
+            .notDisplay {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 <div id="root">
+    <!--
     <nav class="sc-bdVaJa hzuJoB navbar navbar-expand navbar-dark bg-dark">
         <div class="container"><a href="/" class="navbar-brand" style="font-size: 60px;">
             <img alt="" src="/logo.svg"
                  width="30" height="30"
                  class="d-inline-block align-top">Деталист</a>
         </div>
-    </nav>
+    </nav> -->
     <div class="sc-bwzfXH eFOsme container">
-        <h1 class="sc-htpNat fHlYCv">Клиент</h1>
-        <h2>Введите/отсканируйте код товара</h2>
-        <div class="form-group field field-string"><label for="itemCode">Код товара</label>
-            <input name="itemCode" class="form-control" id="itemCode" placeholder=""
-                   type="text" value="">
-        </div>
-        <button id="checkItem" class="btn btn-primary">Проверить</button>
+        <div class="notPrint">
+            <h1 class="sc-htpNat fHlYCv">Клиент</h1>
+            <h2>Введите/отсканируйте код товара</h2>
+            <div class="form-group field field-string"><label for="itemCode">Код товара</label>
+                <input name="itemCode" class="form-control" id="itemCode" placeholder=""
+                       type="text" value="">
+            </div>
+            <button id="checkItem" class="btn btn-primary">Проверить</button>&nbsp;
+            <button  class="btn btn-secondary" onclick="window.print();">Печать</button>&nbsp;
 
-        <hr>
+            <hr>
+        </div>
+
+        <div class="notDisplay">
+            <h1 id="headerInfo"></h1>
+        </div>
+
         <div class="row">
-            <div id="itemTreeView" class="col-md-5"></div>
-            <div class="col-md-5">
+            <div id="itemTreeView" class="col-md-5">
+                <h2 class="notDisplay">Дерево запчастей</h2>
+            </div>
+            <div class="col-md-5 notPrint">
                 <b>Информация</b><br><br>
                 <b>Код</b><br>
                 <span id="code"></span><br>
@@ -49,6 +76,10 @@
                 <br>
                 <button id="markBroken" class="btn btn-danger">Отметить брак</button>
             </div>
+        </div>
+        <div class="notDisplay" id="currentItemInfo">
+
+
         </div>
     </div>
 </div>
@@ -134,7 +165,7 @@
             treeViewArr.push({
                 id: item.id,
                 parent: parent,
-                text: `${item.code} - ${item.type} : ${item.bench}`,
+                text: `${item.code} - ${item.type} : ${item.bench} ${item.broken ? 'БРАК' : ''}`,
                 state: {opened: true},
                 icon: item.broken ? 'icons/warning.png' : 'icons/ok.png'
             });
@@ -159,7 +190,36 @@
 
             currentItem = code;
 
+            $('#headerInfo').text(`Товар ${code}`)
+
             data = data.data;
+
+            try {
+                data.additionalInfo = JSON.parse(data.additionalInfo);
+            } catch (e) {
+            }
+            try {
+                data.additionalInfo = JSON.stringify(data.additionalInfo, 4, 4).replace(/[{}\[\]"]/g, '').replace(/\n/g, '<br>');
+            } catch (e) {
+            }
+            try {
+                data.params = JSON.stringify(data.params, 4, 4).replace(/[{}\[\]"]/g, '').replace(/\n/g, '<br>');
+            } catch (e) {
+            }
+
+            console.log(data);
+
+            $('#currentItemInfo').html(`
+            <h2 class="notDisplay">Информация о запчасти</h2>
+            <b>Код</b> ${data.code}  <br>
+            <b>Добавлен</b> ${data.addedBy}  <br>
+            <b>Партия</b> ${data.bench}  <br>
+            <b>Параметры</b><br>
+            ${data.params}<br>
+            <b>Доп. информация</b><br>
+            ${data.additionalInfo}<br>
+            `);
+
 
             data = formatTreeViewData(data);
 
@@ -171,7 +231,12 @@
 
     $('#checkItem').click(function () {
         updateView($('#itemCode').val());
-    })
+    });
+
+
+    if(window.location.hash) {
+        updateView(window.location.hash.replace('#', ''));
+    }
 
 </script>
 

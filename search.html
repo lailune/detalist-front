@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+
+    <link rel="stylesheet" href="main.css">
+    <title>Деталист - поиск товара</title>
+</head>
+<body>
+<div id="root">
+    <!-- <nav class="sc-bdVaJa hzuJoB navbar navbar-expand navbar-dark bg-dark">
+        <div class="container"><a href="/" class="navbar-brand" style="font-size: 60px;">
+            <img alt="" src="/logo.svg"
+                 width="30" height="30"
+                 class="d-inline-block align-top">Деталист</a>
+        </div>
+    </nav> -->
+    <div class="sc-bwzfXH eFOsme container">
+        <h1 class="sc-htpNat fHlYCv">Клиент</h1>
+        <h2>Поиск товара</h2>
+        <div class="form-group field field-string"><label for="search">Строка для поиска</label>
+            <input name="search" class="form-control" id="search" placeholder=""
+                   type="text" value="">
+        </div>
+        <button id="searchBtn" class="btn btn-primary">Искать</button>
+
+        <hr>
+        <div class="row" id="searchResults">
+
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script>
+
+    async function asyncGet(url) {
+        return new Promise(resolve => {
+            $.get(url, function (data) {
+                resolve(data);
+            })
+        })
+    }
+
+    $('#searchBtn').click(function () {
+        $.get('/items/search/' + encodeURIComponent($('#search').val()), async function (data) {
+            data = data.data;
+            $('#searchResults').find('div').remove();
+            for (let item of data) {
+                item = (await asyncGet('/item/' + item.id)).data;
+                try{
+                    item.additionalInfo = JSON.parse(item.additionalInfo);
+                }catch (e) {}
+                try {
+                    item.additionalInfo = JSON.stringify(item.additionalInfo, 4, 4).replace(/[{}\[\]"]/g, '').replace(/\n/g, '<br>');
+                }catch (e) {}
+                $('#searchResults').append(`<div style="border-bottom: solid; padding-bottom: 10px; padding-top: 10px" class="col-md-12 row">
+
+                        <div class="col-md-2">
+                            <b>Код:</b> ${item.code}
+                        </div>
+                        <div class="col-md-2">
+                            <b>Тип:</b> ${item.type}
+                        </div>
+                        <div class="col-md-2">
+                            <b>Брак:</b> ${item.broken ? 'ДА' : 'нет'}
+                        </div>
+                        <div class="col-md-4">
+                            ${item.additionalInfo}
+                        </div>
+                         <div class="col-md-2">
+                           <a href="check.html#${item.code}" target="_blank" class="btn btn-primary">Посмотреть</a>
+                        </div>
+
+                </div>`);
+            }
+
+
+        })
+    })
+
+</script>
+
+
+</body>
+</html>
