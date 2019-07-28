@@ -34,7 +34,18 @@
         <hr>
         <div class="row">
             <div id="itemTreeView" class="col-md-5"></div>
-            <div class="col-md-5"></div>
+            <div class="col-md-5">
+                <b>Информация</b><br><br>
+                <b>Код</b><br>
+                <span id="code"></span><br>
+                <b>Добавил</b><br>
+                <span id="addedBy"></span><br>
+                <b>Партия</b><br>
+                <span id="bench"></span><br>
+                <b>Тип</b><br>
+                <span id="type"></span><br>
+                <button id="markBroken" class="btn btn-danger">Отметить брак</button>
+            </div>
         </div>
     </div>
 </div>
@@ -52,9 +63,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script>
 
+    $('#markBroken').click(function () {
+        if(confirm('Вы уверены, что хотите пометить эту запчасть как брак?')) {
+            $.post('/item/markBroken', {code: $('#code').text()}, function (data) {
+                if(data.error) {
+                    alert('Ошибка пометки запчасти. ' + data.errorMessage);
+                    return;
+                }
+
+                alert('Запчасть помечена как брак');
+                updateView($('#code').text());
+
+            })
+        }
+    });
+
     function treeViewSelected(id) {
         $.get('/item/' + id, function (data) {
-            console.log(data);
+            $('#code').text(data.code);
+            $('#addedBy').text(data.addedBy);
+            $('#bench').text(data.bench);
+            $('#type').text(data.type);
         })
     }
 
@@ -107,8 +136,8 @@
     }
 
 
-    $('#checkItem').click(function () {
-        $.get('/item/bycode/' + $('#itemCode').val(), function (data) {
+    function updateView(code) {
+        $.get('/item/bycode/' + code, function (data) {
             if(data.error) {
                 alert('Товар не найден. ' + data.errorMessage);
                 return;
@@ -122,6 +151,10 @@
 
             console.log(data);
         })
+    }
+
+    $('#checkItem').click(function () {
+        updateView($('#itemCode').val());
     })
 
 </script>
