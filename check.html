@@ -80,7 +80,7 @@
 
     function treeViewSelected(id) {
         $.get('/item/' + id, function (data) {
-            console.log(data);
+            data = data.data;
             $('#code').text(data.code);
             $('#addedBy').text(data.addedBy);
             $('#bench').text(data.bench);
