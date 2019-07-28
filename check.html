@@ -81,8 +81,8 @@
                 <button id="markBroken" class="btn btn-danger">Отметить брак</button>
             </div>
         </div>
-        <h2>График вероятности брака</h2>
-        <img src="res.png" id="analyticsGraph">
+        <h2 class="graphShow" style="display: none">График вероятности брака</h2>
+        <img src=""   style="width: 100%; height: auto;  display: none" id="analyticsGraph">
         <div class="notDisplay" id="currentItemInfo">
 
 
@@ -246,6 +246,8 @@
             `);
 
             $('#analyticsGraph').attr('src', 'loading.gif');
+            $('#analyticsGraph').show();
+            $('.graphShow').show();
 
             $.get('/analytics/'+data.id, function (data) {
                 $('#analyticsGraph').attr('src', data);
