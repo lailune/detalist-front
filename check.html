@@ -63,6 +63,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script>
 
+    let currentItem = 0;
+
     $('#markBroken').click(function () {
         if(confirm('Вы уверены, что хотите пометить эту запчасть как брак?')) {
             $.post('/item/markBroken', {code: $('#code').text()}, function (data) {
@@ -72,7 +74,7 @@
                 }
 
                 alert('Запчасть помечена как брак');
-                updateView($('#code').text());
+                updateView(currentItem);
 
             })
         }
@@ -143,6 +145,8 @@
                 alert('Товар не найден. ' + data.errorMessage);
                 return;
             }
+
+            currentItem = code;
 
             data = data.data;
 
