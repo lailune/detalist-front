@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
 
     <link rel="stylesheet" href="main.css">
-    <title>Деталист - проверка товара</title>
+    <title>Деталист - проверка изделия</title>
     <style>
         @media print {
             /* Стиль для печати */
@@ -41,9 +41,9 @@
     </nav> -->
     <div class="sc-bwzfXH eFOsme container">
         <div class="notPrint">
-            <h1 class="sc-htpNat fHlYCv">Клиент</h1>
-            <h2>Введите/отсканируйте код товара</h2>
-            <div class="form-group field field-string"><label for="itemCode">Код товара</label>
+            <h1 class="sc-htpNat fHlYCv">Клиент (Введите код изделия) </h1>
+            <br>
+            <div class="form-group field field-string"><label for="itemCode">Код изделия</label>
                 <input name="itemCode" class="form-control" id="itemCode" placeholder=""
                        type="text" value="">
             </div>
@@ -58,10 +58,10 @@
         </div>
 
         <div class="row">
-            <div id="itemTreeView" class="col-md-5">
+            <div id="itemTreeView" class="col-md-8">
                 <h2 class="notDisplay">Дерево запчастей</h2>
             </div>
-            <div class="col-md-5 notPrint">
+            <div class="col-md-4 notPrint infoBlock" style="display:none;">
                 <b>Информация</b><br><br>
                 <b>Код</b><br>
                 <span id="code"></span><br>
@@ -73,6 +73,10 @@
                 <span id="type"></span><br>
                 <b>Брак?</b><br>
                 <span id="broken"></span><br>
+                <b>Параметры</b><br>
+                <span id="paramsInfo"></span><br>
+                <b>Дополнительная информация</b><br>
+                <span id="addInfo"></span><br>
                 <br>
                 <button id="markBroken" class="btn btn-danger">Отметить брак</button>
             </div>
@@ -129,6 +133,25 @@
             } else {
                 $('#markBroken').show();
             }
+
+            try {
+                data.additionalInfo = JSON.parse(data.additionalInfo);
+            } catch (e) {
+            }
+            try {
+                data.additionalInfo = JSON.stringify(data.additionalInfo, 4, 4).replace(/[{}\[\]"]/g, '').replace(/\n/g, '<br>');
+            } catch (e) {
+            }
+            try {
+                data.params = JSON.stringify(data.params, 4, 4).replace(/[{}\[\]"]/g, '').replace(/\n/g, '<br>');
+            } catch (e) {
+            }
+
+            $('#paramsInfo').html(data.params);
+            $('#addInfo').html(data.additionalInfo);
+
+            $('.infoBlock').show(100);
+
         })
     }
 

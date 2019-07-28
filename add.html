@@ -10,23 +10,23 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="main.css">
-    <title>Деталист - создание товара</title>
+    <title>Деталист - создание изделия</title>
 </head>
 <body>
 <div id="root">
-    <nav class="sc-bdVaJa hzuJoB navbar navbar-expand navbar-dark bg-dark">
+  <!--  <nav class="sc-bdVaJa hzuJoB navbar navbar-expand navbar-dark bg-dark">
         <div class="container"><a href="/" class="navbar-brand" style="font-size: 60px;">
             <img alt="" src="/logo.svg"
                  width="30" height="30"
                  class="d-inline-block align-top">Деталист</a>
         </div>
-    </nav>
+    </nav> -->
     <div class="sc-bwzfXH eFOsme container">
         <h1 class="sc-htpNat fHlYCv">Производитель</h1>
         <form class="rjsf" method="post" action="/item/create" id="addForm">
             <div class="form-group field field-object">
                 <fieldset id="formOne">
-                    <legend id="formOne__title">Создание товара/запчасти</legend>
+                    <legend id="formOne__title">Создание изделия</legend>
                     <div class="form-group field field-string"><label for="formOne_addedBy">Кто добавил</label>
                         <select name="addedBy" id="formOne_addedBy" class="form-control">
                             <option value=""></option>
@@ -35,7 +35,7 @@
                             <option value="ООО Детали">ООО Детали</option>
                         </select></div>
                     <div class="form-group field field-string"><label for="formOne_code">Код
-                        товара/запчасти</label>
+                        изделия</label>
                         <input
                                 class="form-control" id="formOne_code" name="code" label="Код" placeholder=""
                                 type="text" value="">
@@ -47,6 +47,7 @@
                             <option value="nuts">Гайка</option>
                             <option value="screw">Болт</option>
                             <option value="disc">Диск</option>
+                            <option value="wheel">Колесо</option>
                         </select>
                     </div>
 
@@ -80,21 +81,25 @@
                     <div id="tyre_attribForm" style="display: none">
                         <div class="form-group field field-string">
                             <label for="tyre_size">Диаметр шины</label>
-                            <input name="tyre_size" class="form-control" id="tyre_size" type="text" disabled>
+                            <input name="Диаметр шины" class="form-control" id="tyre_size" type="text" disabled>
                         </div>
                         <div class="form-group field field-string">
                             <label for="tyre_width">Ширина шины</label>
-                            <input name="tyre_width" class="form-control" id="tyre_width" type="text" disabled>
+                            <input name="Ширина шины" class="form-control" id="tyre_width" type="text" disabled>
+                        </div>
+                        <div class="form-group field field-string">
+                            <label for="tyre_elastic">Эластичность шины</label>
+                            <input name="Эластичность шины" class="form-control" id="tyre_elastic" type="text" disabled>
                         </div>
                     </div>
                     <div id="disc_attribForm" style="display: none">
                         <div class="form-group field field-string">
                             <label for="disc_size">Диаметр диска</label>
-                            <input name="disc_size" class="form-control" id="disc_size" type="text" disabled>
+                            <input name="Диаметр диска" class="form-control" id="disc_size" type="text" disabled>
                         </div>
                         <div class="form-group field field-string">
                             <label for="disc_width">Ширина диска</label>
-                            <input name="disc_width" class="form-control" id="disc_width" type="text" disabled>
+                            <input name="Ширина диска" class="form-control" id="disc_width" type="text" disabled>
                         </div>
                     </div>
                     <div id="screw_attribForm" style="display: none">
@@ -109,12 +114,18 @@
                     </div>
                     <div id="nuts_attribForm" style="display: none">
                         <div class="form-group field field-string">
-                            <label for="nuts_size">Диаметр гаек</label>
-                            <input name="nuts_size" class="form-control" id="nuts_size" type="text" disabled>
+                            <label for="nuts_size">Твёрдость гайки</label>
+                            <input name="Твёрдость гайки" class="form-control" id="nuts_size" type="text" disabled>
                         </div>
                         <div class="form-group field field-string">
                             <label for="nuts_width">Толщина гайки</label>
                             <input name="nuts_width" class="form-control" id="nuts_width" type="text" disabled>
+                        </div>
+                    </div>
+                    <div id="wheel_attribForm" style="display: none">
+                        <div class="form-group field field-string">
+                            <label for="wheel_index">Индекс надёжности</label>
+                            <input name="Индекс надёжности" class="form-control" id="wheel_index" type="text" disabled>
                         </div>
                     </div>
                     <input style="display: none" id="params" name="params">
